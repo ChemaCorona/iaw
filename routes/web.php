@@ -11,26 +11,29 @@
 |
 */
 
+# Descomentar después
+
+/*
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
+});
+*/
+
+
+Route::get('/', function () {
+    return view('form');
 });
 
-Route::get('/login',function(){
-    return view('auth.login');
+Route::post('submitForm','OrderDetailController@store');
+
+Route::get('pdf', function(){
+        Fpdf::AddPage();
+        Fpdf::SetFont('Arial','B',16);
+        Fpdf::Cell(40,10,'Hello World!');
+        Fpdf::Output();
+        exit;
+
 });
 
-Route::get('/logout',function(){
-    return ('Logout usuario');
-});
-
-Route::get('/catalog',function(){
-    return view('catalog.index');
-});
-
-Route::get('/catalog/show/{id}',function($id){
-    return view('catalog.show',array('id'=>$id));
-});
-
-Route::get('/catalog/edit/{id}',function($id){
-    return view('catalog.edit',array('id'=>$id));
-});
+Route::get('/index','UserDetailController@index');
+Route::get('/downloadPDF/{id}','Order@downloadPDF');
